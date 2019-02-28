@@ -29,24 +29,13 @@ import java.util.concurrent.TimeUnit;
  */
 public final class CleanupService {
 
-    /**
-     * Default fixed delay in seconds for scheduled job.
-     */
-    private static final long DEFAULT_FIXED_DELAY = 60L;
+    private static final long FIXED_DELAY = 60;
+    private static final long FIXED_DELAY1 = 60;
 
-    private final long fixedDelay;
     private final String name;
     private final ScheduledExecutorService executor;
 
     public CleanupService(final String name) {
-        this(name, DEFAULT_FIXED_DELAY);
-    }
-
-    /**
-     * Visible for testing only.
-     */
-    public CleanupService(final String name, final long fixedDelay) {
-        this.fixedDelay = fixedDelay;
         this.name = name;
         executor = Executors.newSingleThreadScheduledExecutor(new CleanupThreadFactory());
     }
@@ -58,7 +47,7 @@ public final class CleanupService {
             public void run() {
                 cache.cleanup();
             }
-        }, fixedDelay, fixedDelay, TimeUnit.SECONDS);
+        }, FIXED_DELAY, FIXED_DELAY1, TimeUnit.SECONDS);
     }
 
     public void stop() {
